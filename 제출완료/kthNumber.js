@@ -3,7 +3,6 @@
 // 사용 알고리즘/자료구조 : 배열, 퀵소트(array.sort())
 // 시간 복잡도 : O(nlogn) ~ O(n2)
 
-// 다 방문했을 때
 function main(){
     let answer = new Array();
     
