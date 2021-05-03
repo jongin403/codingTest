@@ -21,6 +21,7 @@ function main(){
 function solution(number, k) {
     let answer = '';
 
+    /*
     let numCnt = new Array(10); // i 번째 인덱스에 숫자 i 가 몇개인지 count
 
     for(let j = 0; j < 10; j++){
@@ -36,6 +37,19 @@ function solution(number, k) {
     }
 
     console.log(numCnt);
+    */
+
+    let numArray = new Array();
+
+    for(let i = 0; i < number.length; i++){
+        numArray.push(number[i]);
+    }
+    sortedNumArray = numList.sort();
+    sortedNumArray.remove()
+    console.log(sortedNumArray);
+
+    // splice : 배열의 index 도 같이 제거
+    // remove : 배열의 index 유지
 
     return answer;
 }
