@@ -3,18 +3,93 @@
 # 사용 알고리즘 : 
 # 시간 복잡도 : 
 
+import math
+
 def main():
     answer = []
     
     # 입력
-    answer.append(solution([1, 2, 3, 9, 10, 12], 7)) # 2
+    #answer.append(solution([1, 2, 3, 9, 10, 12], 7)) # 2
+    answer.append(solution([1, 2, 3, 9, 10, 12,21, 32, 23, 39, 210, 312,221, 21, 33, 93, 130, 112,17, 26, 37, 98, 170, 142], 7000)) # 2
     
     # 출력
     for i in answer:
         print(i)
 
-# 시간초과
+
 def solution(scoville, K):
+    answer = 0
+    sortedScoville = sorted(scoville)
+
+    # K 보다 더 큰수가 있을 경우 필터링 한다.
+    isFilter = K <= sortedScoville[len(sortedScoville)-1]
+    if isFilter:
+        sortedScoville = list(filter(lambda x: x < K, scoville))
+    
+    while(True):
+        if K <= sortedScoville[0]:
+            break
+        if len(sortedScoville) < 2:
+            if isFilter:
+                answer += 1
+            else :
+                answer = -1
+            break        
+
+        # 음식 섞기
+        print("binaryInsert:", sortedScoville)
+        firstFood = sortedScoville.pop(0) # O(1)
+        secondFood = sortedScoville.pop(0)
+        newFood = firstFood + secondFood * 2
+
+        # 적절하게 insert 하기
+        print("newFood:", newFood)
+        sortedScoville = binaryInsert(sortedScoville, newFood) # O(logN)
+        
+        # 반복
+        answer += 1
+
+    return answer
+
+def binaryInsert(sortedScoville, newFood):
+    startIdx = 0
+    endIdx = len(sortedScoville) - 1
+    curIdx = math.floor((startIdx + endIdx) / 2)
+    #print("startIdx:", startIdx, "endIdx:", endIdx, "curIdx:", curIdx, "newFood:", newFood)
+    
+    
+    if len(sortedScoville) < 1:
+        # sortedScoville 이 비어있을 경우
+        sortedScoville.insert(0, newFood)
+    
+    elif newFood < sortedScoville[startIdx]:
+        # sortedScoville 보다 작은 엘리먼트를 넣을 경우
+        sortedScoville.insert(0, newFood)
+
+    elif sortedScoville[endIdx] < newFood:
+        # sortedScoville 보다 큰 엘리먼트를 넣을 경우
+        sortedScoville.insert(endIdx + 1, newFood)
+
+    else:
+        while(True):
+            if newFood < sortedScoville[curIdx]:
+                startIdx += 1
+                endIdx = curIdx - 1
+            if sortedScoville[curIdx] == newFood:
+                sortedScoville.insert(curIdx, newFood)
+                break
+            if sortedScoville[curIdx] < newFood:
+                startIdx = curIdx + 1
+                endIdx -= 1
+            if startIdx >= endIdx:
+                sortedScoville.insert(startIdx, newFood)
+                break
+       
+    #print("binaryInsert:", sortedScoville)
+    return sortedScoville
+
+# 시간초과
+def failedSolution(scoville, K):
     answer = 0
     sortedScoville = sorted(scoville)
 
