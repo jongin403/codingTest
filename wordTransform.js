@@ -8,9 +8,8 @@ function main(){
     let answer = new Array();
     
     // 입력
-    answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]));
-    answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log"]));
-
+    answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"])); // 4
+    answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log"])); // 0
     
     // 출력
     for(let i = 0; i < answer.length; i++){
@@ -22,40 +21,24 @@ function solution(begin, target, words) {
     let answer = 0;
     let answers = []; // 정답 후보
 
+    // target 이 words 에 없는 경우
+    if(!words.includes(target)){
+        return answer;
+    }
+
     // 방문여부 초기화
     let visited = [];
+    let queue = [begin];
+
     for(let idx = 0; idx < words.length; idx++){
         visited.push(false);
     }
 
     
-    let curWord;
-
-    function dfs(word, depth){
-        
-        for(let idx = 0; idx < words.length; idx++){
-            curWord = words[idx];
-            if(target === words[idx]){
-                answer
-                break;
-            }
-            if(isChange(curWord, words[idx]) && !visited[idx]){
-
-            }
-        }
-
-        return depth;
-    }
-
-    for(let idx = 0; idx < words.length; idx++){
-        if(isChange(start, words[idx])){
-            answers.push(dfs(words[idx]), 1);
-        }
-    }
 
     // answers 중 최소값 찾기
     if(answers.length > 0){
-        answer = Math.min(answers);
+        answer = Math.min(...answers);
     }
 
     return answer;
