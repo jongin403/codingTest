@@ -9,7 +9,6 @@ function main(){
     // 입력
     answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]));
     answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log"]));
-
     
     // 출력
     for(let i = 0; i < answer.length; i++){
@@ -18,7 +17,7 @@ function main(){
 }
 
 function solution(begin, target, words) {
-    var answer = 0;
+    let answer = 0;
     return answer;
 }
 
