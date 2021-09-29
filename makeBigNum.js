@@ -20,19 +20,33 @@ function main(){
 
 function solution(number, k) {
     let answer = '';
+    let numberList = number.split(""); // 숫자 목록
+    //console.log(`numberList:${numberList}`);
+    
+    let ableToMakeNumList = []; // 만들 수 있는 숫자 목록
+    let combinationList = combinations(numberList, numberList.length - k);
+    
+    for(let idx = 0; idx < combinationList.length; idx++){
+        // 만들 수 있는 숫자
+        let ableToMakeNum = Number(combinationList[idx].join(''));
+        ableToMakeNumList.push(ableToMakeNum);
+        //console.log(`${ableToMakeNum}`);
+    }
+    
+    answer = String(Math.max(...ableToMakeNumList));
     return answer;
 }
 
-function combinations(arr, selectNumber) {
+const combinations = function(arr, selectNumber) {
     let results = [];
     if (selectNumber === 1){
         return arr.map((el) => [el]);
     }
 
     arr.forEach((fixed, index, origin) => {
-        let rest = origin.slice(index + 1); 
-        let combinations = combinations(rest, selectNumber - 1); 
-        let attached = combinations.map((el) => [fixed, ...el]); 
+        const rest = origin.slice(index + 1); 
+        const combiList = combinations(rest, selectNumber - 1); 
+        const attached = combiList.map((el) => [fixed, ...el]); 
         
         results.push(...attached);
     });
