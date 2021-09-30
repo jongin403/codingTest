@@ -7,9 +7,9 @@ function main(){
     let answer = new Array();
     
     // 입력
-    //answer.push(solution("1924", 2));
+    answer.push(solution("1924", 2));
     answer.push(solution("1231234", 3));
-    //answer.push(solution("4177252841", 4));
+    answer.push(solution("4177252841", 4));
 
     
     // 출력
@@ -20,39 +20,49 @@ function main(){
 
 function solution(number, k) {
     let answer = '';
-    let numberList = number.split(""); // 숫자 목록
-    //console.log(`numberList:${numberList}`);
     
-    let ableToMakeNumList = []; // 만들 수 있는 숫자 목록
-    let combinationList = combinations(numberList, numberList.length - k);
+    const priorityArr = getPriority(number);
+    answer = eraseK(number, priorityArr, k);
     
-    for(let idx = 0; idx < combinationList.length; idx++){
-        // 만들 수 있는 숫자
-        let ableToMakeNum = Number(combinationList[idx].join(''));
-        ableToMakeNumList.push(ableToMakeNum);
-        //console.log(`${ableToMakeNum}`);
-    }
-    
-    answer = String(Math.max(...ableToMakeNumList));
     return answer;
 }
 
-const combinations = function(arr, selectNumber) {
-    let results = [];
-    if (selectNumber === 1){
-        return arr.map((el) => [el]);
+const getPriority = function(number){
+    const priorityArr = new Array(number.length).fill(0);
+    let priority = 1;
+
+    for(let compareNum = 9; compareNum >= 0; compareNum--){
+        // 앞에서 부터 하면 solution("1231234", 3) // 2334
+        //for(let i = 0 ; i < number.length; i++){ 
+        for(let i = number.length - 1 ; i >= 0; i--){
+
+            //console.log(`${number[i]} / ${compareNum} / ${number[i] === compareNum}`)
+            if(Number(number[i]) === compareNum){
+                priorityArr[i] = priority;
+                priority++;                
+            }
+
+        }
     }
+    
+    //console.log(`number:${number}`);
+    //console.log(`priorityArr:${priorityArr}`);
 
-    arr.forEach((fixed, index, origin) => {
-        const rest = origin.slice(index + 1); 
-        const combiList = combinations(rest, selectNumber - 1); 
-        const attached = combiList.map((el) => [fixed, ...el]); 
-        
-        results.push(...attached);
-    });
-
-    return results;
+    return priorityArr;
 }
 
+const eraseK = function(number, priorityArr, k){
+    let exceptNumber = "";
+
+    for(let i = 0 ; i < number.length; i++){
+        console.log(`${priorityArr[i]} / ${number.length - k}`)
+        if(priorityArr[i] <= number.length - k){
+            exceptNumber = exceptNumber.concat(number[i]);
+        }
+    }
+
+    //console.log(`exceptNumber:${exceptNumber}`);
+    return exceptNumber;
+}
 
 main();
