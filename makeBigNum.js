@@ -27,9 +27,11 @@ function solution(number, k) {
 
     // k 보다 작은 인덱스 중에 가장 큰 숫자 찾기
     const eraseKtimes = function(numberArr, k){
+        console.log(`${numberArr} / ${k}`);
+
         // 종료 조건
-        // arr 의 길이가 k 와 같을 경우 모두 삭제
-        if(numberArr.length === k){
+        // k가 arr 의 길이보다 같거나 클 경우 모두 삭제
+        if(numberArr.length <= k){
             return [];
         }
 
@@ -39,8 +41,10 @@ function solution(number, k) {
         
         // 다음 eraseKtimes 세팅
         const nextNumberArr = numberArr.slice(0, curMaxIdx + 1);
-        const nextK = k - (curMaxIdx - 1); // curMaxIdx - 1 개의 숫자 삭제
+        const nextK = k - curMaxIdx; // curMaxIdx 개의 숫자 삭제
         
+        console.log(`curMax:${curMax} / curMaxIdx:${curMaxIdx}`);
+
         // 연결해서 반환
         return numberArr.slice(0,k).concat(eraseKtimes(nextNumberArr, nextK));
     }
