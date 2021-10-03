@@ -7,9 +7,9 @@ function main(){
     let answer = new Array();
     
     // 입력
-    //answer.push(solution("1924", 2));
+    answer.push(solution("1924", 2));
     answer.push(solution("1231234", 3));
-    //answer.push(solution("4177252841", 4));
+    answer.push(solution("4177252841", 4));
 
     
     // 출력
@@ -21,13 +21,11 @@ function main(){
 function solution(number, k) {
     let answer = '';
     let numberArr = number.split('');
-    console.log(`numberArr:${numberArr}`);
+    //console.log(`numberArr:${numberArr}`);
    
-    let savedIdxArr = []; // 지우지 않고 살아남은 인덱스
-
     // k 보다 작은 인덱스 중에 가장 큰 숫자 찾기
     const eraseKtimes = function(numberArr, k){
-        console.log(`${numberArr} / ${k}`);
+        //console.log(`${numberArr} / ${k}`);
 
         // 종료 조건
         // 1. 삭제할 게 없을 경우
@@ -47,11 +45,12 @@ function solution(number, k) {
         // 다음 eraseKtimes 세팅
         const nextNumberArr = numberArr.slice(curMaxIdx + 1);
         const nextK = k - curMaxIdx; // curMaxIdx 개의 숫자 삭제
-        
-        console.log(`curMax:${curMax} / curMaxIdx:${curMaxIdx}`);
-        
+        const curResult = curMax.concat(...eraseKtimes(nextNumberArr, nextK));
+
+        //console.log(`curMax:${curMax} / curMaxIdx:${curMaxIdx} / curResult:${curResult}`);
+
         // 연결해서 반환
-        return numberArr.slice(0,k).concat(eraseKtimes(nextNumberArr, nextK));
+        return curResult;
     }
 
     answer = eraseKtimes(numberArr, k);
