@@ -30,21 +30,26 @@ function solution(number, k) {
         console.log(`${numberArr} / ${k}`);
 
         // 종료 조건
-        // k가 arr 의 길이보다 같거나 클 경우 모두 삭제
+        // 1. 삭제할 게 없을 경우
+        if(k === 0 ){
+            return numberArr;
+        }
+        // 2. k가 arr 의 길이보다 같거나 클 경우 모두 삭제
         if(numberArr.length <= k){
             return [];
         }
 
-        // k 번째보다 작으면서 제일 큰 숫자 찾기
-        const curMax = Math.max(...(numberArr.slice(0,k)));
+        // k + 1 번째보다 작으면서 제일 큰 숫자 찾기
+        // 그래야 k 개를 지울 수 있으니까
+        const curMax = String(Math.max(...(numberArr.slice(0,k+1))));
         const curMaxIdx = numberArr.indexOf(curMax);
         
         // 다음 eraseKtimes 세팅
-        const nextNumberArr = numberArr.slice(0, curMaxIdx + 1);
+        const nextNumberArr = numberArr.slice(curMaxIdx + 1);
         const nextK = k - curMaxIdx; // curMaxIdx 개의 숫자 삭제
         
         console.log(`curMax:${curMax} / curMaxIdx:${curMaxIdx}`);
-
+        
         // 연결해서 반환
         return numberArr.slice(0,k).concat(eraseKtimes(nextNumberArr, nextK));
     }
