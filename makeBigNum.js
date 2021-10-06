@@ -78,7 +78,6 @@ function solution(number, k) {
         const nextNumberArr = numberArr.slice(curMaxIdx + 1);
         const nextK = k - curMaxIdx; // curMaxIdx 개의 숫자 삭제
         
-        // 테스트 8, 10 > 실패 (signal: aborted (core dumped))
         // 메모이제이션 추가
         if(!memoization[(nextNumberArr, nextK)]){
             memoization[(nextNumberArr, nextK)] = eraseKtimes(nextNumberArr, nextK);
@@ -94,5 +93,7 @@ function solution(number, k) {
 
     return answer;    
 }
+
+// 테스트 8, 10 > 실패 (signal: aborted (core dumped))
 
 main();
