@@ -36,8 +36,7 @@ function solution(number, k) {
     }
     
     // 더 없앨만한 문자가 없는 경우 뒤에서부터 없애기
-    stack.slice(0, stack.length - k);
-    answer = stack.join('');
+    answer = stack.slice(0, stack.length - k).join('');
 
     return answer;    
 }
