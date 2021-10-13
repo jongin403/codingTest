@@ -134,7 +134,53 @@ class Heap {
     }
 }
 
-class MinHeap {
+// 참고 : https://nyang-in.tistory.com/153
+class MinHeap extends Heap{
+
+    bubbleUp(){
+        let index = this.data.length - 1;
+
+        while(this.parent(index) !== undefined && 
+              this.parent(index) > this.data[index]){
+
+            this.swap(index, this.parentIndex(index));
+            index = this.parentIndex(index);
+        }
+    }
+
+    bubbleDown(){
+        let index = 0;
+
+        while(this.leftChild(index) !== undefined &&
+              (this.leftChild(index) < this.data[index] || 
+               this.rightChild(index) < this.data[index])){
+
+            let smallerIndex = this.leftChildIndex(index);
+
+            if(this.rightChild(index) !== undefined && 
+               this.rightChild(index) < this.data[smallerIndex]){
+
+                smallerIndex = this.rightChildIndex(index);
+            }
+
+            this.swap(index, smallerIndex);
+            index = smallerIndex;
+        }
+    }
+
+    add(item){
+        this.data[this.data.length] = item;
+        this.bubbleUp();
+    }
+
+    poll(){
+        let item = this.data[0];
+        this.data[0] = this.data[this.data.length - 1];
+        this.data.pop();
+        this.bubbleDown();
+
+        return item;
+    }
 }
 
 class MaxHeap {
