@@ -1,4 +1,9 @@
 // 코딩 테스트용 자료구조 구현
+/*
+http://mauriciosantos.github.io/Buckets-JS/ 를 기반으로
+
+주요 자료구조 및 메서드 위주로 구현
+*/
 
 function main(){
     const heap = new Heap();
@@ -8,25 +13,49 @@ function main(){
 
 // ES6
 class Stack {
+    // Creates an empty Stack.
     constructor(){
         this.top = -1;
         this.data = [];
-        this.MAX_STACK_SIZE = 1 * 1024 * 1024;
     }
     
+    // Pushes an element onto the top of the stack.
+    add(elem){
+       this.push(elem);
+    }
+
+    // Removes all the elements from the stack.
+    clear(){
+        this.top = -1;
+        this.data = [];
+    }
+
+    // Returns true if the stack contains the specified element.
+    contains(elem, equalsFunction){
+        // TO-DO
+    }
+
+    // Returns true if the stack is equal to another stack.
+    equals(other, equalsFunction){
+        // TO-DO
+    }
+
+    // Executes the provided function once per element present in the stack in LIFO order.
+    forEach(callback){
+        // TO-DO
+    }
+
+    // Checks if the stack is empty.
     isEmpty(){
         return this.data.length == 0;
     }
 
-    push(val){
-        if(this.MAX_STACK_SIZE <= this.data.length){
-            console.log(`max stack size exceed error (MAX_STACK_SIZE:${this.MAX_STACK_SIZE})`);
-            return undefined;
-        } else {
-            this.data[++this.top] = val;
-        }
+    // Returns the element at the top of the stack without removing it.
+    peek(){
+        return this.data[this.data.length - 1];
     }
 
+    // Removes the element at the top of the stack and returns it.
     pop(){
         if(this.top < 0){
             return undefined;
@@ -37,25 +66,34 @@ class Stack {
         }
     }
 
-    peek(){
-        return this.data[this.data.length - 1];
+    // Pushes an element onto the top of the stack.
+    push(elem){
+        this.data[++this.top] = elem;
     }
 
-    clear(){
-        this.top = -1;
-        this.data = [];
+    // Returns the number of elements in the stack.
+    size(){
+        // TO-DO
     }
 
+    // Returns an array containing all the elements in the stack in LIFO order.
+    toArray(){
+        // TO-DO
+    }
+
+    // additional utilities
+
+    // 스택에 있는 요소를 콘솔에 출력
     print(){
-        let printVal = "";
+        let printElem = "";
         for(let idx = 0; idx < this.data.length; idx++){
             if(idx == 0){
-                printVal += this.data[idx];
+                printElem += this.data[idx];
             } else {
-                printVal += ", " + this.data[idx];
+                printElem += ", " + this.data[idx];
             }
         }
-        console.log(`${printVal}`);
+        console.log(`${printElem}`);
     }
 }
 
