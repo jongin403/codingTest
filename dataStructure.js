@@ -37,7 +37,7 @@ class Stack {
 
     // Returns true if the stack is equal to another stack.
     equals(other, equalsFunction){
-        // TO-DO
+        return equalsFunction(this.data, other);
     }
 
     // Executes the provided function once per element present in the stack in LIFO order.
