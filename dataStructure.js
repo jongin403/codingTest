@@ -98,10 +98,28 @@ class Stack {
 }
 
 class Heap {
+    // Creates an empty binary heap.
     constructor(){
         //this.data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 0, 1];
         this.data = [];
     }
+
+    // Adds the given element into the heap.
+    add(element){
+        // TO-DO
+    }
+    
+    // Removes all the elements from the heap.
+    clear(){
+        // TO-DO
+    }
+
+    // Returns true if the heap contains the specified element.
+    contains(element){
+        // TO-DO
+    }
+
+    //
 
     swap(index1, index2){
         let temp = this.data[index1];
