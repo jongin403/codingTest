@@ -6,8 +6,6 @@ http://mauriciosantos.github.io/Buckets-JS/ 를 기반으로
 */
 
 function main(){
-    const heap = new Heap();
-    heap.print();
     
 }
 
@@ -32,22 +30,53 @@ class Stack {
 
     // Returns true if the stack contains the specified element.
     contains(elem, equalsFunction){
-        // TO-DO
+        let isContains = false;
+        for(let idx = 0; idx < this.data.length; idx++){
+            if(equalsFunction(elem, this.data[idx])){
+                isContains = true;
+                break;
+            }
+        }
+        return isContains;
     }
 
     // Returns true if the stack is equal to another stack.
     equals(other, equalsFunction){
-        return equalsFunction(this.data, other);
+        // ex) equalsFunction
+        // function(a, b){
+        //     return a === b;
+        // }
+
+        let isEquals = true;
+
+        if(this.data.length === other.length){
+            return false;
+        }
+
+        for(let idx = 0; idx < this.data.length; idx++){
+            if(equalsFunction(other[idx], this.data[idx])){
+                isEquals = false;
+                break;
+            }
+        }
+        return isEquals;
     }
 
     // Executes the provided function once per element present in the stack in LIFO order.
     forEach(callback){
-        // TO-DO
+        // ex) callback
+        // function(elem, index, arr){
+        //     console.log(`arr[${index}]:${elem}`);
+        // }
+
+        for(let idx = this.data.length - 1; idx >= 0; idx--){
+            callback(this.data[idx], idx, this.data);
+        }
     }
 
     // Checks if the stack is empty.
     isEmpty(){
-        return this.data.length == 0;
+        return this.data.length === 0;
     }
 
     // Returns the element at the top of the stack without removing it.
