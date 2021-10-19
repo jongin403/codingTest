@@ -6,7 +6,19 @@ http://mauriciosantos.github.io/Buckets-JS/ 를 기반으로
 */
 
 function main(){
-    
+    const stack = new Stack();
+
+    stack.push(1);
+    stack.push(3);
+    stack.push(2);
+
+    stack.forEach(function(elem, index, arr){
+        console.log(`arr[${index}]:${elem}`);
+    });
+
+    const stack2 = [];
+    stack2[3] = 1;
+    console.log(`stack2.length:${stack2.length}`);
 }
 
 // ES6
@@ -69,7 +81,7 @@ class Stack {
         //     console.log(`arr[${index}]:${elem}`);
         // }
 
-        for(let idx = this.data.length - 1; idx >= 0; idx--){
+        for(let idx = 0; idx < this.data.length; idx++){
             callback(this.data[idx], idx, this.data);
         }
     }
@@ -102,7 +114,7 @@ class Stack {
 
     // Returns the number of elements in the stack.
     size(){
-        // TO-DO
+        return this.data.length;
     }
 
     // Returns an array containing all the elements in the stack in LIFO order.
