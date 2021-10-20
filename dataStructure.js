@@ -3,22 +3,24 @@
 http://mauriciosantos.github.io/Buckets-JS/ 를 기반으로
 
 주요 자료구조 및 메서드 위주로 구현
+
+
+참고자료
+https://velog.io/@longroadhome/자료구조-JS로-구현하는-HEAP
+https://velog.io/@longroadhome/자료구조-JS로-구현하는-.큐-Queue
+https://velog.io/@longroadhome/자료구조-JS로-구현하는-순열과-조합
 */
 
 function main(){
     const stack = new Stack();
-
+    console.log(`${stack.isEmpty()}`);
     stack.push(1);
     stack.push(3);
     stack.push(2);
 
-    stack.forEach(function(elem, index, arr){
-        console.log(`arr[${index}]:${elem}`);
-    });
-
-    const stack2 = [];
-    stack2[3] = 1;
-    console.log(`stack2.length:${stack2.length}`);
+    const arr = stack.toArray();
+    console.log(`${arr}`);
+    
 }
 
 // ES6
@@ -31,7 +33,7 @@ class Stack {
     
     // Pushes an element onto the top of the stack.
     add(elem){
-       this.push(elem);
+        this.data[++this.top] = elem;
     }
 
     // Removes all the elements from the stack.
@@ -101,9 +103,9 @@ class Stack {
         if(this.top < 0){
             return undefined;
         } else {
-            let popVal = this.data[this.top];
+            const val = this.data[this.top];
             this.data = this.data[0, --this.top];
-            return popVal;
+            return val;
         }
     }
 
@@ -119,29 +121,128 @@ class Stack {
 
     // Returns an array containing all the elements in the stack in LIFO order.
     toArray(){
-        // TO-DO
+        const arr = [];
+        for(let idx = 0; idx < this.data.length; idx++){
+            arr[idx] = this.data[idx];
+        }
+        return arr;
     }
 
     // additional utilities
 
-    // 스택에 있는 요소를 콘솔에 출력
-    print(){
-        let printElem = "";
+    // 
+    toString(){
+        let str = "";
         for(let idx = 0; idx < this.data.length; idx++){
             if(idx == 0){
-                printElem += this.data[idx];
+                str += this.data[idx];
             } else {
-                printElem += ", " + this.data[idx];
+                str += ", " + this.data[idx];
             }
         }
-        console.log(`${printElem}`);
+        return str;
+    }
+
+}
+
+class Queue {
+    constructor(){
+        this.front = 0;
+        this.rear = 0;
+        this.data = [];
+    }
+
+    // Inserts the specified element into the end of the queue.
+    add(elem){
+        // TO-DO
+        this.enqueue(elem);
+    }
+
+    // Removes all the elements from the queue.
+    clear(){
+        this.front = 0;
+        this.rear = 0;
+        this.data = [];
+    }
+
+    // Returns true if the queue contains the specified element.
+    contains(elem, equalsFunction){
+        // TO-DO
+    }
+
+    // Retrieves and removes the head of the queue.
+    dequeue(){
+        // TO-DO
+        if(this.datatop < 0){
+            return undefined;
+        } else {
+            const val = this.data[this.top];
+            this.data = this.data[0, --this.top];
+            return val;
+        }
+    }
+
+    // Inserts the specified element into the end of the queue.
+    enqueue(elem){
+        // TO-DO
+        this.data = elemthis.data;
+    }
+
+    // Returns true if the queue is equal to another queue.
+    equals(other, equalsFunction){
+        // TO-DO
+    }
+
+    // Executes the provided function once per each element present in the queue in FIFO order.
+    forEach(callback){
+        // TO-DO
+    }
+
+    // Checks if the queue is empty.
+    isEmpty(){
+        return this.data.length === 0;
+    }
+
+    // Retrieves, but does not remove, the head of the queue.
+    peek(){
+        return this.data[0];
+    }
+
+    // Returns the number of elements in the queue.
+    size(){
+        return this.data.length;
+    }
+
+    // Returns an array containing all the elements in the queue in FIFO order.
+    toArray(){
+        // TO-DO
+        const arr = [];
+        for(let idx = 0; idx < this.data.length; idx++){
+            arr[idx] = this.data[idx];
+        }
+        return arr;
+    }
+
+    // additional utilities
+
+    // 
+    toString(){
+        // TO-DO
+        let str = "";
+        for(let idx = 0; idx < this.data.length; idx++){
+            if(idx == 0){
+                str += this.data[idx];
+            } else {
+                str += ", " + this.data[idx];
+            }
+        }
+        return str;
     }
 }
 
 class Heap {
     // Creates an empty binary heap.
     constructor(){
-        //this.data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 0, 1];
         this.data = [];
     }
 
@@ -283,9 +384,6 @@ class MinHeap extends Heap{
 class MaxHeap {
 }
 
-class Queue {
-
-}
 
 // ES5
 
