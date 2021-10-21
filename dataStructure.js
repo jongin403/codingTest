@@ -147,21 +147,20 @@ class Stack {
 
 class Queue {
     constructor(){
-        this.front = 0;
-        this.rear = 0;
+        this.front = -1;
+        this.rear = -1;
         this.data = [];
     }
 
     // Inserts the specified element into the end of the queue.
     add(elem){
-        // TO-DO
-        this.enqueue(elem);
+        this.data[++rear] = elem;
     }
 
     // Removes all the elements from the queue.
     clear(){
-        this.front = 0;
-        this.rear = 0;
+        this.front = -1;
+        this.rear = -1;
         this.data = [];
     }
 
@@ -184,8 +183,7 @@ class Queue {
 
     // Inserts the specified element into the end of the queue.
     enqueue(elem){
-        // TO-DO
-        this.data = elemthis.data;
+        this.data[++rear] = elem;
     }
 
     // Returns true if the queue is equal to another queue.
@@ -210,7 +208,11 @@ class Queue {
 
     // Returns the number of elements in the queue.
     size(){
-        return this.data.length;
+        if (this.data[rear] === undefined) {
+            return 0;
+        } else {
+            return this.rear - this.front + 1;
+        }
     }
 
     // Returns an array containing all the elements in the queue in FIFO order.
