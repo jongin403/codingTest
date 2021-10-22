@@ -171,39 +171,58 @@ class Queue {
 
     // Retrieves and removes the head of the queue.
     dequeue(){
-        // TO-DO
-        if(this.datatop < 0){
-            return undefined;
-        } else {
-            const val = this.data[this.top];
-            this.data = this.data[0, --this.top];
-            return val;
+        if(this.front !== this.rear){
+            this.data[++this.front] = elem;
         }
     }
 
     // Inserts the specified element into the end of the queue.
     enqueue(elem){
-        this.data[++rear] = elem;
+        this.data[++this.rear] = elem;
     }
 
     // Returns true if the queue is equal to another queue.
     equals(other, equalsFunction){
-        // TO-DO
+        // ex) equalsFunction
+        // function(a, b){
+        //     return a === b;
+        // }
+
+        let isEquals = true;
+
+        if(this.data.length === other.length){
+            return false;
+        }
+
+        for(let idx = 0; idx < this.data.length; idx++){
+            if(equalsFunction(other[idx], this.data[idx])){
+                isEquals = false;
+                break;
+            }
+        }
+        return isEquals;
     }
 
     // Executes the provided function once per each element present in the queue in FIFO order.
     forEach(callback){
-        // TO-DO
+        // ex) callback
+        // function(elem, index, arr){
+        //     console.log(`arr[${index}]:${elem}`);
+        // }
+
+        for(let idx = 0; idx < this.data.length; idx++){
+            callback(this.data[idx], idx, this.data);
+        }
     }
 
     // Checks if the queue is empty.
     isEmpty(){
-        return this.data.length === 0;
+        return this.front === this.rear;
     }
 
     // Retrieves, but does not remove, the head of the queue.
     peek(){
-        return this.data[0];
+        return this.data[front];
     }
 
     // Returns the number of elements in the queue.
