@@ -12,14 +12,16 @@ https://velog.io/@longroadhome/자료구조-JS로-구현하는-순열과-조합
 */
 
 function main(){
-    const stack = new Stack();
-    console.log(`${stack.isEmpty()}`);
-    stack.push(1);
-    stack.push(3);
-    stack.push(2);
+    const queue = new Queue();
+    
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    queue.enqueue(5);
+    console.log(`${queue.dequeue()}`);
 
-    const arr = stack.toArray();
-    console.log(`${arr}`);
+    console.log(`${queue.toString()}`);
     
 }
 
@@ -147,38 +149,47 @@ class Stack {
 
 class Queue {
     constructor(){
-        this.front = -1;
-        this.rear = -1;
+        this.front = 0;
+        this.rear = 0;
         this.data = [];
     }
 
     // Inserts the specified element into the end of the queue.
     add(elem){
-        this.data[++rear] = elem;
+        this.data[rear++] = elem;
     }
 
     // Removes all the elements from the queue.
     clear(){
-        this.front = -1;
-        this.rear = -1;
+        this.front = 0;
+        this.rear = 0;
         this.data = [];
     }
 
     // Returns true if the queue contains the specified element.
     contains(elem, equalsFunction){
-        // TO-DO
+        let isContains = false;
+        for(let idx = this.front; idx < this.rear; idx++){
+            if(equalsFunction(elem, this.data[idx])){
+                isContains = true;
+                break;
+            }
+        }
+        return isContains;
     }
 
     // Retrieves and removes the head of the queue.
     dequeue(){
         if(this.front !== this.rear){
-            this.data[++this.front] = elem;
+            return this.data[this.front++];
+        } else {
+            return undefined;
         }
     }
 
     // Inserts the specified element into the end of the queue.
     enqueue(elem){
-        this.data[++this.rear] = elem;
+        this.data[this.rear++] = elem;
     }
 
     // Returns true if the queue is equal to another queue.
@@ -194,8 +205,8 @@ class Queue {
             return false;
         }
 
-        for(let idx = 0; idx < this.data.length; idx++){
-            if(equalsFunction(other[idx], this.data[idx])){
+        for(let idx = this.front; idx < this.rear; idx++){
+            if(equalsFunction(other[idx - this.front], this.data[idx])){
                 isEquals = false;
                 break;
             }
@@ -210,8 +221,8 @@ class Queue {
         //     console.log(`arr[${index}]:${elem}`);
         // }
 
-        for(let idx = 0; idx < this.data.length; idx++){
-            callback(this.data[idx], idx, this.data);
+        for(let idx = this.front; idx < this.rear; idx++){
+            callback(this.data[idx], idx - this.front, this.data);
         }
     }
 
@@ -222,24 +233,19 @@ class Queue {
 
     // Retrieves, but does not remove, the head of the queue.
     peek(){
-        return this.data[front];
+        return this.data[this.front];
     }
-
+    
     // Returns the number of elements in the queue.
     size(){
-        if (this.data[rear] === undefined) {
-            return 0;
-        } else {
-            return this.rear - this.front + 1;
-        }
+        return this.rear - this.front;
     }
 
     // Returns an array containing all the elements in the queue in FIFO order.
     toArray(){
-        // TO-DO
         const arr = [];
-        for(let idx = 0; idx < this.data.length; idx++){
-            arr[idx] = this.data[idx];
+        for(let idx = this.front; idx < this.rear; idx++){
+            arr[idx - this.front] = this.data[idx];
         }
         return arr;
     }
@@ -248,10 +254,9 @@ class Queue {
 
     // 
     toString(){
-        // TO-DO
         let str = "";
-        for(let idx = 0; idx < this.data.length; idx++){
-            if(idx == 0){
+        for(let idx = this.front; idx < this.rear; idx++){
+            if(idx == this.front){
                 str += this.data[idx];
             } else {
                 str += ", " + this.data[idx];
