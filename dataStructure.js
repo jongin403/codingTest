@@ -287,45 +287,42 @@ class Heap {
         // TO-DO
     }
 
-    //
-
-    swap(index1, index2){
-        let temp = this.data[index1];
-        this.data[index1] = this.data[index2];
-        this.data[index2] = temp;
+    // Returns true if the binary heap is equal to another heap.
+    equals(other){
+        // TO-DO
     }
 
-    parentIndex(index){
-        return Math.floor((index - 1) / 2);
+    // Executes the provided function once per element present in the heap in no particular order.
+    forEach(callback){
+        // TO-DO
     }
 
-    leftChildIndex(index){
-        return index * 2 + 1;
+    // Checks if the heap is empty.
+    isEmpty(){
+        // TO-DO
     }
 
-    rightChildIndex(index){
-        return index * 2 + 2;
-    }
-
-    parent(index){
-        return this.data[this.parentIndex(index)];
-    }
-
-    leftChild(index){
-        return this.data[this.leftChildIndex(index)];
-    }
-
-    rightChild(index){
-        return this.data[this.rightChildIndex(index)];
-    }
-
+    // Retrieves but does not remove the root (minimum) element of the heap.
     peek(){
         return this.data[0];
     }
 
+    // Retrieves and removes the root (minimum) element of the heap.
+    removeRoot(){
+        // TO-DO
+    }
+    
+    // Returns the number of elements in the heap.
     size(){
         return this.data.length;
     }
+
+    // Returns an array containing all the elements in the heap in no particular order.
+    toArray(){
+        // TO-DO
+    }
+
+    // additional utilities
 
     print(){
         // 0 : 2^0 - 1 ~ 2^1 - 2
