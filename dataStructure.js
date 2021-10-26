@@ -183,7 +183,7 @@ class Queue {
         if(this.front !== this.rear){
             return this.data[this.front++];
         } else {
-            return undefined;
+            return null;
         }
     }
 
@@ -269,12 +269,23 @@ class Queue {
 class Heap {
     // Creates an empty binary heap.
     constructor(){
-        this.data = [];
+        this.data = [null]; // 계산의 편의성을 위해 0 번째 index 는 비움
+        // leftChildIdx = parentIdx * 2
+        // rightChildIdx = parentIdx * 2 + 1
     }
 
     // Adds the given element into the heap.
     add(element){
         // TO-DO
+        this.heap.push(value);
+        let curIdx = this.heap.length - 1;
+        let parIdx = (curIdx / 2) >> 0;
+        
+        while(curIdx > 1 && this.heap[parIdx] > this.heap[curIdx]) {
+            this.swap(parIdx, curIdx)
+            curIdx = parIdx;
+            parIdx = (curIdx / 2) >> 0;
+        }
     }
     
     // Removes all the elements from the heap.
@@ -299,22 +310,47 @@ class Heap {
 
     // Checks if the heap is empty.
     isEmpty(){
-        // TO-DO
+        return this.data.length === 1;
     }
 
     // Retrieves but does not remove the root (minimum) element of the heap.
     peek(){
-        return this.data[0];
+        return this.data[1] ? this.data[1] : null;
     }
 
     // Retrieves and removes the root (minimum) element of the heap.
     removeRoot(){
         // TO-DO
+        const min = this.heap[1];	
+        if(this.heap.length <= 2) this.heap = [ null ];
+        else this.heap[1] = this.heap.pop();   
+        
+        let curIdx = 1;
+        let leftIdx = curIdx * 2;
+        let rightIdx = curIdx * 2 + 1; 
+        
+        if(!this.heap[leftIdx]) return min;
+        if(!this.heap[rightIdx]) {
+            if(this.heap[leftIdx] < this.heap[curIdx]) {
+                this.swap(leftIdx, curIdx);
+            }
+            return min;
+        }
+
+        while(this.heap[leftIdx] < this.heap[curIdx] || this.heap[rightIdx] < this.heap[curIdx]) {
+            const minIdx = this.heap[leftIdx] > this.heap[rightIdx] ? rightIdx : leftIdx;
+            this.swap(minIdx, curIdx);
+            curIdx = minIdx;
+            leftIdx = curIdx * 2;
+            rightIdx = curIdx * 2 + 1;
+        }
+
+        return min;
     }
     
     // Returns the number of elements in the heap.
     size(){
-        return this.data.length;
+        return this.data.length - 1;
     }
 
     // Returns an array containing all the elements in the heap in no particular order.
@@ -323,6 +359,12 @@ class Heap {
     }
 
     // additional utilities
+    
+    swap(a, b){
+        let temp = this.data[b];
+        this.data[b] = this.data[a];
+        this.data[a] = temp;
+    }
 
     print(){
         // 0 : 2^0 - 1 ~ 2^1 - 2
