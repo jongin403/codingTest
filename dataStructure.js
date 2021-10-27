@@ -12,17 +12,15 @@ https://velog.io/@longroadhome/자료구조-JS로-구현하는-순열과-조합
 */
 
 function main(){
-    const queue = new Queue();
+    const heap = new Heap();
     
-    queue.enqueue(1);
-    queue.enqueue(2);
-    queue.enqueue(3);
-    queue.enqueue(4);
-    queue.enqueue(5);
-    console.log(`${queue.dequeue()}`);
-
-    console.log(`${queue.toString()}`);
+    heap.add(1);
+    heap.add(2);
+    heap.add(3);
+    heap.add(4);
+    heap.print();
     
+    console.log(1 >> 1);
 }
 
 // ES6
@@ -277,11 +275,12 @@ class Heap {
     // Adds the given element into the heap.
     add(element){
         // TO-DO
-        this.heap.push(value);
-        let curIdx = this.heap.length - 1;
+        this.data.push(element);
+        let curIdx = this.data.length - 1;
         let parIdx = (curIdx / 2) >> 0;
         
-        while(curIdx > 1 && this.heap[parIdx] > this.heap[curIdx]) {
+        // * minHeap / maxHeap 에 따라 달라짐
+        while(curIdx > 1 && this.data[parIdx] > this.data[curIdx]) {
             this.swap(parIdx, curIdx)
             curIdx = parIdx;
             parIdx = (curIdx / 2) >> 0;
@@ -290,7 +289,7 @@ class Heap {
     
     // Removes all the elements from the heap.
     clear(){
-        // TO-DO
+        this.data = [null];
     }
 
     // Returns true if the heap contains the specified element.
@@ -321,24 +320,25 @@ class Heap {
     // Retrieves and removes the root (minimum) element of the heap.
     removeRoot(){
         // TO-DO
+        // * minHeap / maxHeap 에 따라 달라짐
         const min = this.heap[1];	
-        if(this.heap.length <= 2) this.heap = [ null ];
-        else this.heap[1] = this.heap.pop();   
+        if(this.data.length <= 2) this.data = [ null ];
+        else this.data[1] = this.heap.pop();   
         
         let curIdx = 1;
         let leftIdx = curIdx * 2;
         let rightIdx = curIdx * 2 + 1; 
         
-        if(!this.heap[leftIdx]) return min;
-        if(!this.heap[rightIdx]) {
-            if(this.heap[leftIdx] < this.heap[curIdx]) {
+        if(!this.data[leftIdx]) return min;
+        if(!this.data[rightIdx]) {
+            if(this.data[leftIdx] < this.data[curIdx]) {
                 this.swap(leftIdx, curIdx);
             }
             return min;
         }
 
-        while(this.heap[leftIdx] < this.heap[curIdx] || this.heap[rightIdx] < this.heap[curIdx]) {
-            const minIdx = this.heap[leftIdx] > this.heap[rightIdx] ? rightIdx : leftIdx;
+        while(this.data[leftIdx] < this.data[curIdx] || this.data[rightIdx] < this.data[curIdx]) {
+            const minIdx = this.data[leftIdx] > this.data[rightIdx] ? rightIdx : leftIdx;
             this.swap(minIdx, curIdx);
             curIdx = minIdx;
             leftIdx = curIdx * 2;
@@ -375,9 +375,9 @@ class Heap {
         let curVal;
         let exponent = 0;
         
-        while(2 ** exponent - 2 < this.size()){
+        while(2 ** exponent - 1 < this.size()){
             printVal = "";
-            for(let idx = 2 ** exponent - 1; idx < 2 ** (exponent + 1) - 1; idx++){
+            for(let idx = 2 ** exponent; idx < 2 ** (exponent + 1); idx++){
                 
                 if(this.data[idx] != undefined){
                     curVal = this.data[idx];
@@ -385,7 +385,7 @@ class Heap {
                     curVal = "' '";
                 }
                 
-                if(idx == 2 ** exponent - 1){
+                if(idx == 2 ** exponent){
                     printVal += curVal;
                 } else {
                     printVal += ", " + curVal;
