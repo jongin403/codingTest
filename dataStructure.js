@@ -272,21 +272,6 @@ class Heap {
         // rightChildIdx = parentIdx * 2 + 1
     }
 
-    // Adds the given element into the heap.
-    add(element){
-        // TO-DO
-        this.data.push(element);
-        let curIdx = this.data.length - 1;
-        let parIdx = (curIdx / 2) >> 0;
-        
-        // * minHeap / maxHeap 에 따라 달라짐
-        while(curIdx > 1 && this.data[parIdx] > this.data[curIdx]) {
-            this.swap(parIdx, curIdx)
-            curIdx = parIdx;
-            parIdx = (curIdx / 2) >> 0;
-        }
-    }
-    
     // Removes all the elements from the heap.
     clear(){
         this.data = [null];
@@ -317,37 +302,6 @@ class Heap {
         return this.data[1] ? this.data[1] : null;
     }
 
-    // Retrieves and removes the root (minimum) element of the heap.
-    removeRoot(){
-        // TO-DO
-        // * minHeap / maxHeap 에 따라 달라짐
-        const min = this.heap[1];	
-        if(this.data.length <= 2) this.data = [ null ];
-        else this.data[1] = this.heap.pop();   
-        
-        let curIdx = 1;
-        let leftIdx = curIdx * 2;
-        let rightIdx = curIdx * 2 + 1; 
-        
-        if(!this.data[leftIdx]) return min;
-        if(!this.data[rightIdx]) {
-            if(this.data[leftIdx] < this.data[curIdx]) {
-                this.swap(leftIdx, curIdx);
-            }
-            return min;
-        }
-
-        while(this.data[leftIdx] < this.data[curIdx] || this.data[rightIdx] < this.data[curIdx]) {
-            const minIdx = this.data[leftIdx] > this.data[rightIdx] ? rightIdx : leftIdx;
-            this.swap(minIdx, curIdx);
-            curIdx = minIdx;
-            leftIdx = curIdx * 2;
-            rightIdx = curIdx * 2 + 1;
-        }
-
-        return min;
-    }
-    
     // Returns the number of elements in the heap.
     size(){
         return this.data.length - 1;
@@ -364,6 +318,18 @@ class Heap {
         let temp = this.data[b];
         this.data[b] = this.data[a];
         this.data[a] = temp;
+    }
+
+    parentIndex(index){
+        return Math.floor((index-1) / 2);
+    }
+
+    leftChildIndex(index){
+        return index * 2 + 1;
+    }
+
+    rightChildIndex(index){
+        return index * 2 + 2;
     }
 
     print(){
@@ -436,6 +402,23 @@ class MinHeap extends Heap{
         this.bubbleUp();
     }
 
+    /*
+    // Adds the given element into the heap.
+    add(element){
+        // TO-DO
+        this.data.push(element);
+        let curIdx = this.data.length - 1;
+        let parIdx = (curIdx / 2) >> 0;
+        
+        // * minHeap / maxHeap 에 따라 달라짐
+        while(curIdx > 1 && this.data[parIdx] > this.data[curIdx]) {
+            this.swap(parIdx, curIdx)
+            curIdx = parIdx;
+            parIdx = (curIdx / 2) >> 0;
+        }
+    }
+    */
+    
     poll(){
         let item = this.data[0];
         this.data[0] = this.data[this.data.length - 1];
@@ -444,6 +427,39 @@ class MinHeap extends Heap{
 
         return item;
     }
+
+    /*
+    // Retrieves and removes the root (minimum) element of the heap.
+    removeRoot(){
+        // TO-DO
+        // * minHeap / maxHeap 에 따라 달라짐
+        const min = this.heap[1];	
+        if(this.data.length <= 2) this.data = [ null ];
+        else this.data[1] = this.heap.pop();   
+        
+        let curIdx = 1;
+        let leftIdx = curIdx * 2;
+        let rightIdx = curIdx * 2 + 1; 
+        
+        if(!this.data[leftIdx]) return min;
+        if(!this.data[rightIdx]) {
+            if(this.data[leftIdx] < this.data[curIdx]) {
+                this.swap(leftIdx, curIdx);
+            }
+            return min;
+        }
+
+        while(this.data[leftIdx] < this.data[curIdx] || this.data[rightIdx] < this.data[curIdx]) {
+            const minIdx = this.data[leftIdx] > this.data[rightIdx] ? rightIdx : leftIdx;
+            this.swap(minIdx, curIdx);
+            curIdx = minIdx;
+            leftIdx = curIdx * 2;
+            rightIdx = curIdx * 2 + 1;
+        }
+
+        return min;
+    }
+    */
 }
 
 class MaxHeap {
