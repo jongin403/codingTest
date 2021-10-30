@@ -332,6 +332,18 @@ class Heap {
         return index * 2 + 2;
     }
 
+    parent(index){
+        return this.data[this.parentIndex(index)];
+    }
+
+    leftChild(index){
+        return this.data[this.leftChildIndex(index)];
+    }
+
+    rightChild(index){
+        return this.data[this.rightChildIndex(index)];
+    }
+
     print(){
         // 0 : 2^0 - 1 ~ 2^1 - 2
         // 1 2 : 2^1 - 1 ~ 2^2 - 2
@@ -380,13 +392,13 @@ class MinHeap extends Heap{
     bubbleDown(){
         let index = 0;
 
-        while(this.leftChild(index) !== undefined &&
+        while(this.leftChild(index) !== undefined && 
               (this.leftChild(index) < this.data[index] || 
                this.rightChild(index) < this.data[index])){
 
             let smallerIndex = this.leftChildIndex(index);
 
-            if(this.rightChild(index) !== undefined && 
+            if(this.rightChild(index) !==undefined && 
                this.rightChild(index) < this.data[smallerIndex]){
 
                 smallerIndex = this.rightChildIndex(index);
@@ -462,7 +474,38 @@ class MinHeap extends Heap{
     */
 }
 
-class MaxHeap {
+class MaxHeap extends MinHeap{
+    
+    bubbleUp(){
+        let index = this.data.length - 1;
+        
+        while(this.parent(index) !== undefined && 
+                this.parent(index) < this.data[index]){
+
+            this.swap(index, this.parentIndex(index));
+            index = this.parentIndex(index);
+        }
+    }
+
+    bubbleDown(){
+        let index = 0;
+        
+        while(this.leftChild(index)  !== undefined && 
+                (this.leftChild(index) > this.data[index] || 
+                this.rightChild(index) > this.items[index])){
+
+            let largerIndex = this.leftChildIndex(index);
+            
+            if(this.rightChild(index)  !== undefined && 
+                this.rightChild(index) > this.data[largerIndex]){
+
+                largerIndex = this.rightChildIndex(index);
+            }
+            
+            this.swap(largerIndex, index);
+            index = largerIndex;
+        }
+    }
 }
 
 
