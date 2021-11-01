@@ -12,15 +12,21 @@ https://velog.io/@longroadhome/자료구조-JS로-구현하는-순열과-조합
 */
 
 function main(){
-    const heap = new Heap();
+    const heap = new MaxHeap();
     
     heap.add(1);
     heap.add(2);
     heap.add(3);
     heap.add(4);
-    heap.print();
+    heap.add(5);
+    heap.add(6);
     
-    console.log(1 >> 1);
+    heap.print();
+    console.log(``);
+    heap.poll();
+    heap.print();
+    console.log(``);
+    
 }
 
 // ES6
@@ -267,14 +273,12 @@ class Queue {
 class Heap {
     // Creates an empty binary heap.
     constructor(){
-        this.data = [null]; // 계산의 편의성을 위해 0 번째 index 는 비움
-        // leftChildIdx = parentIdx * 2
-        // rightChildIdx = parentIdx * 2 + 1
+        this.data = [];
     }
 
     // Removes all the elements from the heap.
     clear(){
-        this.data = [null];
+        this.data = [];
     }
 
     // Returns true if the heap contains the specified element.
@@ -294,17 +298,17 @@ class Heap {
 
     // Checks if the heap is empty.
     isEmpty(){
-        return this.data.length === 1;
+        return this.data.length === 0;
     }
 
     // Retrieves but does not remove the root (minimum) element of the heap.
     peek(){
-        return this.data[1] ? this.data[1] : null;
+        return this.data[0] ? this.data[0] : null;
     }
 
     // Returns the number of elements in the heap.
     size(){
-        return this.data.length - 1;
+        return this.data.length;
     }
 
     // Returns an array containing all the elements in the heap in no particular order.
@@ -355,7 +359,10 @@ class Heap {
         
         while(2 ** exponent - 1 < this.size()){
             printVal = "";
-            for(let idx = 2 ** exponent; idx < 2 ** (exponent + 1); idx++){
+            var start = 2 ** exponent - 1;
+            var end = 2 ** (exponent + 1) - 1;
+
+            for(let idx = start; idx < end; idx++){
                 
                 if(this.data[idx] != undefined){
                     curVal = this.data[idx];
@@ -363,7 +370,7 @@ class Heap {
                     curVal = "' '";
                 }
                 
-                if(idx == 2 ** exponent){
+                if(idx == start){
                     printVal += curVal;
                 } else {
                     printVal += ", " + curVal;
@@ -377,13 +384,12 @@ class Heap {
 
 // 참고 : https://nyang-in.tistory.com/153
 class MinHeap extends Heap{
-
+    
     bubbleUp(){
         let index = this.data.length - 1;
 
-        while(this.parent(index) !== undefined && 
-              this.parent(index) > this.data[index]){
-
+        while(this.parent(index) !== undefined && this.parent(index) > this.data[index]){
+            //console.log(`swap ${this.data[index]} <-> ${this.data[this.parentIndex(index)]}`);
             this.swap(index, this.parentIndex(index));
             index = this.parentIndex(index);
         }
@@ -393,17 +399,16 @@ class MinHeap extends Heap{
         let index = 0;
 
         while(this.leftChild(index) !== undefined && 
-              (this.leftChild(index) < this.data[index] || 
-               this.rightChild(index) < this.data[index])){
+             (this.leftChild(index) < this.data[index] || this.rightChild(index) < this.data[index])){
 
             let smallerIndex = this.leftChildIndex(index);
 
-            if(this.rightChild(index) !==undefined && 
-               this.rightChild(index) < this.data[smallerIndex]){
+            if(this.rightChild(index) !== undefined && this.rightChild(index) < this.data[smallerIndex]){
 
                 smallerIndex = this.rightChildIndex(index);
             }
 
+            //console.log(`swap ${this.data[index]} <-> ${this.data[smallerIndex]}`);
             this.swap(index, smallerIndex);
             index = smallerIndex;
         }
@@ -414,23 +419,6 @@ class MinHeap extends Heap{
         this.bubbleUp();
     }
 
-    /*
-    // Adds the given element into the heap.
-    add(element){
-        // TO-DO
-        this.data.push(element);
-        let curIdx = this.data.length - 1;
-        let parIdx = (curIdx / 2) >> 0;
-        
-        // * minHeap / maxHeap 에 따라 달라짐
-        while(curIdx > 1 && this.data[parIdx] > this.data[curIdx]) {
-            this.swap(parIdx, curIdx)
-            curIdx = parIdx;
-            parIdx = (curIdx / 2) >> 0;
-        }
-    }
-    */
-    
     poll(){
         let item = this.data[0];
         this.data[0] = this.data[this.data.length - 1];
@@ -440,68 +428,36 @@ class MinHeap extends Heap{
         return item;
     }
 
-    /*
-    // Retrieves and removes the root (minimum) element of the heap.
-    removeRoot(){
-        // TO-DO
-        // * minHeap / maxHeap 에 따라 달라짐
-        const min = this.heap[1];	
-        if(this.data.length <= 2) this.data = [ null ];
-        else this.data[1] = this.heap.pop();   
-        
-        let curIdx = 1;
-        let leftIdx = curIdx * 2;
-        let rightIdx = curIdx * 2 + 1; 
-        
-        if(!this.data[leftIdx]) return min;
-        if(!this.data[rightIdx]) {
-            if(this.data[leftIdx] < this.data[curIdx]) {
-                this.swap(leftIdx, curIdx);
-            }
-            return min;
-        }
-
-        while(this.data[leftIdx] < this.data[curIdx] || this.data[rightIdx] < this.data[curIdx]) {
-            const minIdx = this.data[leftIdx] > this.data[rightIdx] ? rightIdx : leftIdx;
-            this.swap(minIdx, curIdx);
-            curIdx = minIdx;
-            leftIdx = curIdx * 2;
-            rightIdx = curIdx * 2 + 1;
-        }
-
-        return min;
-    }
-    */
 }
 
 class MaxHeap extends MinHeap{
-    
+
+    // Override
     bubbleUp(){
         let index = this.data.length - 1;
         
-        while(this.parent(index) !== undefined && 
-                this.parent(index) < this.data[index]){
-
+        while(this.parent(index) !== undefined && this.parent(index) < this.data[index]){
+            //console.log(`swap ${this.data[index]} <-> ${this.data[this.parentIndex(index)]}`);
             this.swap(index, this.parentIndex(index));
             index = this.parentIndex(index);
         }
     }
 
+    // Override
     bubbleDown(){
         let index = 0;
         
-        while(this.leftChild(index)  !== undefined && 
-                (this.leftChild(index) > this.data[index] || 
-                this.rightChild(index) > this.items[index])){
+        while(this.leftChild(index) !== undefined && 
+             (this.leftChild(index) > this.data[index] || this.rightChild(index) > this.items[index])){
 
             let largerIndex = this.leftChildIndex(index);
             
-            if(this.rightChild(index)  !== undefined && 
-                this.rightChild(index) > this.data[largerIndex]){
+            if(this.rightChild(index) !== undefined && this.rightChild(index) > this.data[largerIndex]){
 
                 largerIndex = this.rightChildIndex(index);
             }
             
+            //console.log(`swap ${this.data[largerIndex]} <-> ${this.data[index]}`);
             this.swap(largerIndex, index);
             index = largerIndex;
         }
