@@ -464,6 +464,67 @@ class MaxHeap extends MinHeap{
     }
 }
 
+class PriorityQueue {
+    constructor(){
+        this.data = [];
+    }
+
+    // Inserts the specified element into the priority queue.
+    add(element){
+
+    }
+
+    // Removes all elements from the priority queue.
+    clear(){
+
+    }
+
+    // Returns true if the priority queue contains the specified element.
+    contains(element){
+        
+    }
+
+    // Retrieves and removes the highest priority element of the queue.
+    dequeue(){
+
+    }
+
+    // Inserts the specified element into the priority queue.
+    enqueue(element){
+
+    }
+
+    // Returns true if the queue is equal to another queue.
+    equals(other){
+
+    }
+
+    // Executes the provided function once per element present in the queue in no particular order.
+    forEach(callback){
+
+    }
+
+    // Checks if the priority queue is empty.
+    isEmpty(){
+
+    }
+
+    // Retrieves, but does not remove, the highest priority element of the queue.
+    peek(){
+
+    }
+    
+    // Returns the number of elements in the priority queue.
+    size(){
+
+    }
+
+    // Returns an array containing all the elements in the queue in no particular order.
+    toArray(){
+        
+    }
+
+}
 
 // ES5
 
