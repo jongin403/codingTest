@@ -7,7 +7,7 @@ function main(){
     let answer = new Array();
     
     // 입력
-    answer.push(solution([[0, 3], [1, 9], [2, 6]])); // 9
+    answer.push(solution([[0, 3], [101, 9], [102, 6]])); // 9
     
     // 출력
     for(let i = 0; i < answer.length; i++){
@@ -51,11 +51,13 @@ function solution(jobs) {
     }
 
     let sum = 0;
-    jobs.forEach(function(a,b){
-        sum += b;
+    jobs.forEach(function(item,index){
+        sum += item[0];
     })
     answer = (answer - sum) / jobs.length;
-    return answer;
+
+    // 소수 점 이하의 수 버리기
+    return Math.floor(answer);
 }
 
 class Heap {
