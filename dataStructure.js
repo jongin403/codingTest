@@ -12,23 +12,7 @@ https://velog.io/@longroadhome/자료구조-JS로-구현하는-순열과-조합
 */
 
 function main(){
-<<<<<<< HEAD
-    const heap = new MaxHeap();
-    
-    heap.add(1);
-    heap.add(2);
-    heap.add(3);
-    heap.add(4);
-    heap.add(5);
-    heap.add(6);
-    
-    heap.print();
-    console.log(``);
-    heap.poll();
-    heap.print();
-    console.log(``);
-    
-=======
+
     const heap = new MinHeap();
    
     heap.add(8);
@@ -63,7 +47,6 @@ function main(){
     heap.print();
     heap.poll();
     heap.print();
->>>>>>> main
 }
 
 // ES6
