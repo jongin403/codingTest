@@ -1,9 +1,40 @@
 // 코딩 테스트용 자료구조 구현
 
 function main(){
-    const heap = new Heap();
+    const heap = new MinHeap();
+   
+    heap.add(8);
     heap.print();
-    
+    heap.add(7);
+    heap.print();
+    heap.add(6);
+    heap.print();
+    heap.add(5);
+    heap.print();
+    heap.add(1);
+    heap.print();
+    heap.add(4);
+    heap.print();
+    heap.add(2);
+    heap.print();
+    heap.add(3);
+    heap.print();
+    heap.poll();
+    heap.print();
+    heap.poll();
+    heap.print();
+    heap.poll();
+    heap.print();
+    heap.poll();
+    heap.print();
+    heap.poll();
+    heap.print();
+    heap.poll();
+    heap.print();
+    heap.poll();
+    heap.print();
+    heap.poll();
+    heap.print();
 }
 
 // ES6
