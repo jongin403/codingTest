@@ -9,6 +9,7 @@ function main(){
     // 입력
     answer.push(solution([70, 50, 80, 50], 100)); // 3
     answer.push(solution([70, 80, 50], 100)); // 3
+    answer.push(solution([10, 10, 20, 20, 30, 50, 40, 20, 30], 100)); // 5
     
     // 출력
     for(let i = 0; i < answer.length; i++){
@@ -21,19 +22,22 @@ function main(){
 function solution(people, limit) {
     let answer = 0;
     
+    const LIMIT_PEOPLE = 2;
+    const MIN_WEIGHT = 40;
     const movedPeople = new Array(people.length);
     movedPeople.fill(false);
 
     people.sort().reverse();
-    console.log(`reverse sorted people:${people}`);
+    //console.log(`reverse sorted people:${people}`);
     
-
     let movedPeopleCnt = 0;
     let boatCnt = 0;
 
     while(true){
 
         let curLimit = limit;
+        let curPeople = 0;
+
         for(let idx = 0; idx < people.length; idx++){
             if(!movedPeople[idx]){
                 
@@ -41,10 +45,12 @@ function solution(people, limit) {
                 if(curLimit >= people[idx]){
                     movedPeople[idx] = true;
                     movedPeopleCnt ++;
+                    curPeople++;
                     curLimit -= people[idx];
                 } 
                 
-                if(curLimit <= 0){
+                // 인원수 및 몸무게 제한
+                if(LIMIT_PEOPLE <= curPeople || curLimit < MIN_WEIGHT){
                     break;
                 }
 
