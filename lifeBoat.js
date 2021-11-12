@@ -7,9 +7,11 @@ function main(){
     let answer = new Array();
     
     // 입력
-    answer.push(solution([70, 50, 80, 50], 100)); // 3
-    answer.push(solution([70, 80, 50], 100)); // 3
-    answer.push(solution([10, 10, 20, 20, 30, 50, 40, 20, 30], 100)); // 5
+    //answer.push(solution([70, 50, 80, 50], 100)); // 3
+    //answer.push(solution([70, 80, 50], 100)); // 3
+    //answer.push(solution([10, 10, 20, 20, 30, 50, 40, 20, 30], 100)); // 5
+    answer.push(solution([40, 50, 150, 160], 200)); // 2
+    //answer.push(solution([100, 500, 500, 900, 950], 1000)); // 3
     
     // 출력
     for(let i = 0; i < answer.length; i++){
@@ -27,12 +29,12 @@ function solution(people, limit) {
     const movedPeople = new Array(people.length);
     movedPeople.fill(false);
 
-    people.sort().reverse();
+    people.sort((a,b) => a - b).reverse(); // sort 따로 설정하지 않으면 50,40,160,150 로 정렬
     //console.log(`reverse sorted people:${people}`);
     
     let movedPeopleCnt = 0;
     let boatCnt = 0;
-
+/*
     while(true){
 
         let curLimit = limit;
@@ -63,7 +65,7 @@ function solution(people, limit) {
             break;
         }
     }
-    
+    */
     answer = boatCnt;
 
     return answer;
