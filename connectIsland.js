@@ -1,6 +1,6 @@
 // 프로그래머스
 // 코딩테스트 연습 > 탐욕법(Greedy) > 섬 연결하기
-// 사용 알고리즘 : Kruskal 알고리즘
+// 사용 알고리즘 : Kruskal 알고리즘, union-find 알고리즘
 // 시간 복잡도 : 
 
 function main(){
@@ -20,29 +20,66 @@ function main(){
 function solution(n, costs) {
     let answer = 0;
 
-    // 소속 섬 세팅
-    // 연결된 섬 중 가장 작은 섬의 번호를 소속 섬이라 한다.
-    for(let idx = 0; idx < costs.length; idx++){
-        costs[idx].push(false); // 연결 여부
-        
-        if(costs[1] < costs[0]){
-            costs[idx].push(costs[1]);
+    const getParent = function(parent, x){
+        if(parent[x] == x){
+            return x;
         } else {
-            costs[idx].push(costs[0]);
+            return getParent(parent, parent[x]);
         }
-        
-        console.log(`costs:${idx} / ${costs[idx]}`);
-    }
-
-    // 소속 섬이 동일한 섬에서 외부로 나가는 길 중
-    // 가장 비용이 낮은 길을 연결한다.
-    const connnectMinCost = function(arrays){
-        
     };
 
-    // 모든 섬의 소속섬이 0 이 될 때 까지 반복한다.
+    const unionParent = function(parent, a, b){
+        a = getParent(parent, a);
+        b = getParent(parent, b);
 
+        if(a < b){
+            parent[b] = a;
+        } else {
+            parent[a] = b;
+        }
+    };
+
+    const compareParent = function(parent, a, b){
+        a = getParent(parent, a);
+        b = getParent(parent, b);
+
+        if(a == b){
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    // init parent
+    let parent = new Array(n);
+    let count = 0;
+
+    for(let idx = 0; idx < parent.length; idx++){
+        parent[idx] = idx;
+    }
+    //console.log(`parent:${parent}`);
+
+    // sort by cost
+    costs.sort((a,b) => a[2] - b[2]);
     
+    for(let idx = 0; idx < costs.length; idx++){
+        //console.log(`idx:${idx} / costs:${costs[idx]}`);
+    }
+
+    for(let idx = 0; idx < costs.length; idx++){
+        let cost = costs[idx];
+        if(!compareParent(parent, cost[0], cost[1])){
+            answer += cost[2];
+            unionParent(parent, cost[0], cost[1]);
+            count += 1;
+        }
+
+        if(count == n - 1){
+            break;
+        }
+        //console.log(`idx:${idx} / cost:${cost}`);
+    }
+
     return answer;
 }
 
