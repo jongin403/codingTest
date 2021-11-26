@@ -4,21 +4,31 @@
 // 시간 복잡도 : 
 
 function main(){
-    let answer = new Array();
+    const input = new Array();
+    const output = new Array();
     
-    // 입력
-    answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]));
-    answer.push(solution("hit", "cog", ["hot", "dot", "dog", "lot", "log"]));
+    // 입출력 예 입력
+    input.push([[-20,-15], [-14,-5], [-18,-13], [-5,-3]]);
+    output.push(2);
+    input.push([[-20,-15], [-14,-5], [-18,-13], [-5,-3]]);
+    output.push(2);
     
-    // 출력
-    for(let i = 0; i < answer.length; i++){
-        console.log(answer[i]);
+    console.log(`execution result`);
+    for(let idx = 0; idx < input.length; idx++){
+        let start = new Date();
+        let answer = solution(input[idx])
+        let end = new Date();
+        
+        console.log(`#${idx}. answer:${answer} / correct answer:${output[idx]} / time:${end - start}ms`);
     }
+    
 }
 
-function solution(begin, target, words) {
-    let answer = 0;
-    return answer;
+function solution(input) {
+    let sum = 0;
+    for (let i = 1; i <= 1000000; i++) {
+        sum = sum + i;
+    }
 }
 
 main();
