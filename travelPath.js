@@ -22,8 +22,15 @@ function main(){
 
 // DFS 알고리즘
 // 최대한 내려갔을 때 종료되지 않을 경우 다시 탐색한다.
+
+// 스택의 최상단 노드를 확인하고
+// 최상단 노드에게 방문하지 않은 노드가 있다면 노드를 스택에 넣고 방문처리
+// 방문하지 않은 인접 노드가 없다면 스택에서 최상단 노드를 뺸다.
 function solution(tickets) {
     let answer = [];
+
+    const visited = [];
+
 
     const tTree = new Tree();
     const dfsPath = [];
