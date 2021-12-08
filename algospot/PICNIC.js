@@ -8,8 +8,11 @@
 function main(){
 
     const linePerTestCase = 2;
-    const input = [];
-    let count = -1;
+    const testCase;
+    const input = new Array(linePerTestCase);
+
+    let lineCount = 0;
+    
     const readline = require('readline');
     const rl = readline.createInterface({
         input: process.stdin,
@@ -17,16 +20,29 @@ function main(){
     });
 
     rl.on('line', function(line) {
-        input.push(line.trim());
-        count ++;
-        if (count === Number(input[0]) * linePerTestCase) {
+        
+        if(testCase == undefined){
+            // testCase 의 갯수 입력
+            testCase = line.trim();
+        } else if((lineCount - 1) % linePerTestCase == 1){
+            input[0].push(line.trim());            
+        }
+        
+        lineCount++;
+
+        if (lineCount === Number(testCase) * linePerTestCase + 1) {
             rl.close();
         }
+
     }).on('close', function() {
-        for (var i = 1; i <= +input[0]; i++){
-            console.log(solution(input[i]));
+        for (var i = 1; i <= C; i++){
+            console.log(setInput(input1[i], input2[i]));
         }
     });
+}
+
+function setInput(){
+
 }
 
 function solution(inputLine) {
