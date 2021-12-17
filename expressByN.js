@@ -9,6 +9,8 @@ function main(){
     // 입력
     answer.push(solution(5, 12)); // 4
     answer.push(solution(2, 11)); // 3
+    answer.push(solution(5, 31168)); // -1
+    answer.push(solution(1, 1121)); // 7
     
     // 출력
     for(let i = 0; i < answer.length; i++){
@@ -19,49 +21,45 @@ function main(){
 function solution(N, number) {
     var answer = -1;
 
-    const resultArray = [];
-    const memo = new Array(32000);
-    memo.fill(-1); // memo[idx] = 숫자 N 으로 표현할 수 있는 사용 횟수의 최소값
+    const MAX_MIN_VALUE = 8; // 사용횟수 최소값의 가능한 최대값
+    // resultArr[count] : 숫자 N 을 count 개 사용하여 만들 수 있는 수의 모음
+    const resultArr = new Array(MAX_MIN_VALUE + 1);
+    for(let idx = 1; idx < MAX_MIN_VALUE + 1; idx++){
+        resultArr[idx] = [];
+    }
+    
+    let count = 1;
 
-    let count = 0;
-    const dp = function(number){
-        // 숫자 1개 더 사용
-        count++;
-        console.log(`count:${count} / number:${number}`);
-
-        for(let idx = 0; idx < memo.length; idx++){
-            if(memo[idx] !== -1){
-                console.log(`idx:${idx} / memo[idx]:${memo[idx]}`);
+    const dp = function(count){
+        //console.log(`count:${count}`);
+        if(count === 1){
+            resultArr[count].push(N);
+        } else if(8 < count){
+            answer = -1;
+            return;
+        } else {
+            // 가능한 값 계산
+            for(let idx = 0; idx < MAX_MIN_VALUE; idx++){
+                for(let jdx = 0; jdx < resultArr[count - 1].length; jdx++){
+                    resultArr[count].push(calc(resultArr[count - 1][jdx], N, idx, N));
+                }
             }
+
+            //중복 제거
+            resultArr[count] = Array.from(new Set(resultArr[count]));
+            //console.log(`count:${count} / resultArr[count]:${resultArr[count]}`);
         }
 
-        // 종료 조건
-        if(memo[number] !== -1 || count > 8){
+        if(-1 < resultArr[count].indexOf(number)){
+            answer = count;
             return;
         }
-        
-        if(count === 1){
-            if(memo[N] === -1){
-                memo[N] = count;
-            } 
-        }
-        
-        for(let idx = 0; idx < 8; idx++){
-            let targetNum = calc(number, N, idx);
-            if(memo[targetNum] === -1){
-                memo[targetNum] = count + 1;
-            } else if(memo[targetNum] !== -1){
-                memo[targetNum] = Math.min(memo[targetNum], count + 1);
-            }
 
-            dp(targetNum);
-        }
-
+        dp(count + 1);
     };
+    
+    dp(count);
 
-    dp(number);
-
-    answer = memo[number];
     return answer;
 }
 
@@ -74,9 +72,37 @@ function solution(N, number) {
 // 5. B / A
 // 6. AB
 // 7. BA
-function calc(A, B, calIdx){
-    let result = 0;
+function calc(A, B, calIdx, N){
+    // 불가능한 연산일 경우 중복으로 제거 되도록 기본값을 + 연산으로 선정
+    let result = A + B;
+    
+    // 숫자를 붙이는 연산은 중간에 다른 숫자가 있을 경우(다른 연산이 된 경우) 사용불가
+    const isOnlyN = function(A, N){
+        let result = true;
+        const splitA = String(A).split('');
+        for(let idx = 0; idx < splitA.length; idx++){
+            if(splitA[idx] !== String(N)){
+                result = false;
+            }
+        }
+        return result;
+    }
+    
+    if(calIdx === 6 || calIdx === 7){
+        if(!isOnlyN(A, N) || !isOnlyN(B, N)){
+            return result;
+        }
+    }
 
+    // 나눗셈 연산은 0으로 나눌 수 없음
+    if(calIdx === 4 && B == 0){
+        return result;
+    }
+
+    if(calIdx === 5 && A == 0){
+        return result;
+    }
+    
     switch(calIdx){
         case 0:
             result = A + B;
