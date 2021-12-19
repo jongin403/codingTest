@@ -1,7 +1,7 @@
 # 프로그래머스
 # 코딩테스트 연습 > 동적계획법(Dynamic Programming) > 등굣길
-# 사용 알고리즘 : 
-# 시간 복잡도 : 
+# 사용 알고리즘 : DP
+# 시간 복잡도 : O(N)
 
 def main():
     answer = []
@@ -24,8 +24,6 @@ def main():
     for iAnswer, iOutput in zip(answer, output):
         print('# answer:' + str(iAnswer) + ' / correct answer:' + str(iOutput))
 
-# 웅덩이가 없는 경우 경로 수 : (m-1) * (n-1)
-# 웅덩이 위치가 x, y 인 경우 웅덩이를 거치는 경로 수 : (x-1) * (y-1) * (m-x) * (n-y)
 """
 def solution(m, n, puddles):
     answer = 0
@@ -63,7 +61,8 @@ def solution(m, n, puddles):
     answer = totWay % 1000000007
     return answer
 """
-# 1. 거쳐서 갈 수 있으면 중복되는 경로가 있을 수 있어서 puddles 각각 빼면 안됨
+# 1. 전체 경로 수 - 웅덩이로 지나는 경로 수
+#    >> 거쳐서 갈 수 있으면 중복되는 경로가 있을 수 있어서 puddles 각각 빼면 안됨
 # 2. x == 1, y == 1 인 인경우 중간에 puddles 가 있다면 1 이 아니라 0 으로 계산해야함
 
 def solution(m, n, puddles):
