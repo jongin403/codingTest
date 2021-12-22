@@ -18,21 +18,31 @@ def main():
 
 def solution(money):
     answer = 0
-    memoization = [] # memoization[idx] = dp[idx]
+    memoization = {} # key : idx / value : dp[idx]
     
     # idx 번째 집까지 털었을 경우 최대 값
-    def dp(idx):
+    # 1. idx 0 선택   : idx <= len(money) - 1
+    # 2. idx 0 선택 X : idx <= len(money)
+    def dp(idx, selZero):
         # 종료 조건
-        if len(money) <= idx:
-            return
+        if idx == 0:
+            memoization[idx] = money[0]
         
-        if(not memoization[idx]):
-            newDp = max(dp[idx - 1], dp[idx - 2] + money[idx])
+        if idx == 1:
+            memoization[idx] = max(money[0], money[1])
+        
+        if idx == 2:
+            memoization[idx] = max(money[0], money[1], money[2])
+        
+        if(idx not in memoization):
+            newDp = max(dp(idx - 1), dp(idx - 2) + money[idx])
             memoization[idx] = newDp
             
         return memoization[idx]
 
     answer = dp(len(money) - 1)        
+
+    print(memoization)
     
     return answer
 
