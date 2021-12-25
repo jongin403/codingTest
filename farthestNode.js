@@ -18,11 +18,12 @@ function main(){
     
 }
 
+/*
 function solution(n, edge) {
     let answer = 0;
-    let answerDepth = 0;
-    const visited = []
-    const resultList = []; // result[depth] 에 노드 정보 push
+    const visited = []; // 방문 여부 판단
+    const shortestList = new Array(n + 1); // result[curNodeNum] = depth
+    shortestList[0] = 0;
 
     const bfs = function(curNodeNum, depth){
         console.log(`curNodeNum:${curNodeNum} / depth:${depth}`);
@@ -30,7 +31,6 @@ function solution(n, edge) {
         
         // 현재 노드 방문처리
         visited.push(curNodeNum);
-        
         // 다음에 방문할 노드 구하기
         const nextNodes = edge.filter(el => (el[0] == curNodeNum || el[1] == curNodeNum))
                               .map(el => el[0] == curNodeNum ? el[1] : el[0]);
@@ -42,18 +42,11 @@ function solution(n, edge) {
         }
         console.log(`nextNodes:${nextNodes} / nextVisit:${nextVisit}`);
 
-        // 마지막 방문만을 남겨둔 경우
-        if(visited.length === n - 1){
-            if(answerDepth < depth){
-                answerDepth = depth;
-            }
-            if(resultList[depth] == undefined){
-                resultList[depth] = [];    
-            }
-            resultList[depth].push(...nextVisit);
-            return;
+        // 기존 경로가 없거나 더 멀 경우
+        if(!shortestList[curNodeNum] || depth < shortestList[curNodeNum]){
+            shortestList[curNodeNum] = depth;
         }
-
+        
         // 다음 방문
         for(let idx = 0; idx < nextVisit.length; idx++){
             bfs(nextVisit[idx], depth + 1);
@@ -62,13 +55,54 @@ function solution(n, edge) {
 
     bfs(1, 0);
 
-    console.log(`answerDepth:${answerDepth}`);
-    for(let idx = 0; idx < resultList.length; idx++){
-        console.log(`idx:${idx} / resultList:${resultList[idx]}`);
+    // 가장 긴 최단거리 개수
+    console.log(`shortestList:${shortestList} / max:${Math.max(...shortestList)}`);
+    for(let idx = 0; idx < shortestList.length; idx++){
+        //console.log(`idx:${idx} / shortestList:${shortestList[idx]}`);
     }
-    
-    answer = resultList[answerDepth].length;
 
+    answer = shortestList.filter(el => el == Math.max(...shortestList)).length
+    return answer;
+}
+*/
+
+function solution(n, edge) {
+    let answer = 0;
+    const visited = []; // 방문 여부 판단
+    const queue = []; // 방문할 노드
+    const shortestList = [];
+
+    const bfs = function(startNodeNum, depth){
+        queue.push(startNodeNum);
+
+        while(0 < queue.length){
+            const curNodeNum = queue.shift();
+            
+            // 현재 노드가 visited 에 없을 경우
+            if(visited.indexOf(curNodeNum) < 0){
+                visited.push(curNodeNum);
+                const nextNodes = edge.filter(el => (el[0] == curNodeNum || el[1] == curNodeNum))
+                                    .map(el => el[0] == curNodeNum ? el[1] : el[0]);
+
+                console.log(`curNodeNum:${curNodeNum} / depth:${depth} / visited:${visited}`);
+                console.log(`nextNodes:${nextNodes}`);
+                for(let idx = 0; idx < nextNodes.length; idx++){
+                    queue.push(nextNodes[idx]);
+                }
+            }
+
+        }
+    };
+
+    bfs(1, 0);
+
+    // 가장 긴 최단거리 개수
+    console.log(`shortestList:${shortestList} / max:${Math.max(...shortestList)}`);
+    for(let idx = 0; idx < shortestList.length; idx++){
+        //console.log(`idx:${idx} / shortestList:${shortestList[idx]}`);
+    }
+
+    answer = shortestList.filter(el => el == Math.max(...shortestList)).length
     return answer;
 }
 
