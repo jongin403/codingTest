@@ -74,20 +74,28 @@ function solution(n, edge) {
 
     const bfs = function(startNodeNum, depth){
         queue.push(startNodeNum);
+        shortestList[startNodeNum] = depth;
 
         while(0 < queue.length){
+            console.log(`shortestList`);
+            for(let idx = 1; idx < shortestList.length; idx++){
+                console.log(`idx:${idx} / shortestList:${shortestList[idx]}`);
+            }
             const curNodeNum = queue.shift();
             
             // 현재 노드가 visited 에 없을 경우
             if(visited.indexOf(curNodeNum) < 0){
                 visited.push(curNodeNum);
+                depth = shortestList[curNodeNum] + 1;
+
                 const nextNodes = edge.filter(el => (el[0] == curNodeNum || el[1] == curNodeNum))
                                     .map(el => el[0] == curNodeNum ? el[1] : el[0]);
 
-                console.log(`curNodeNum:${curNodeNum} / depth:${depth} / visited:${visited}`);
-                console.log(`nextNodes:${nextNodes}`);
+                console.log(`curNodeNum:${curNodeNum} / visited:${visited}`);
+                //console.log(`nextNodes:${nextNodes}`);
                 for(let idx = 0; idx < nextNodes.length; idx++){
                     queue.push(nextNodes[idx]);
+                    shortestList[nextNodes[idx]] = depth;                    
                 }
             }
 
@@ -97,6 +105,7 @@ function solution(n, edge) {
     bfs(1, 0);
 
     // 가장 긴 최단거리 개수
+    shortestList[0] = 0; // Math.max 계산용
     console.log(`shortestList:${shortestList} / max:${Math.max(...shortestList)}`);
     for(let idx = 0; idx < shortestList.length; idx++){
         //console.log(`idx:${idx} / shortestList:${shortestList[idx]}`);
