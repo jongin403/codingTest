@@ -1,7 +1,7 @@
 // 프로그래머스
 // 코딩테스트 연습 > 그래프 > 가장 먼 노드
-// 사용 알고리즘 : 
-// 시간 복잡도 : 
+// 사용 알고리즘 : BFS
+// 시간 복잡도 : O(V+E)
 
 function main(){
     const answer = new Array();
@@ -77,10 +77,6 @@ function solution(n, edge) {
         shortestList[startNodeNum] = depth;
 
         while(0 < queue.length){
-            console.log(`shortestList`);
-            for(let idx = 1; idx < shortestList.length; idx++){
-                console.log(`idx:${idx} / shortestList:${shortestList[idx]}`);
-            }
             const curNodeNum = queue.shift();
             
             // 현재 노드가 visited 에 없을 경우
@@ -91,11 +87,14 @@ function solution(n, edge) {
                 const nextNodes = edge.filter(el => (el[0] == curNodeNum || el[1] == curNodeNum))
                                     .map(el => el[0] == curNodeNum ? el[1] : el[0]);
 
-                console.log(`curNodeNum:${curNodeNum} / visited:${visited}`);
+                //console.log(`curNodeNum:${curNodeNum} / visited:${visited}`);
                 //console.log(`nextNodes:${nextNodes}`);
                 for(let idx = 0; idx < nextNodes.length; idx++){
                     queue.push(nextNodes[idx]);
-                    shortestList[nextNodes[idx]] = depth;                    
+                    // 최단거리가 갱신되는 일을 막기 위해 조건 추가
+                    if(shortestList[nextNodes[idx]] == undefined){
+                        shortestList[nextNodes[idx]] = depth;
+                    }
                 }
             }
 
@@ -105,8 +104,8 @@ function solution(n, edge) {
     bfs(1, 0);
 
     // 가장 긴 최단거리 개수
-    shortestList[0] = 0; // Math.max 계산용
-    console.log(`shortestList:${shortestList} / max:${Math.max(...shortestList)}`);
+    shortestList.shift(); // Math.max 계산을 위해 0번째 인덱스 삭제
+    //console.log(`shortestList:${shortestList} / max:${Math.max(...shortestList)}`);
     for(let idx = 0; idx < shortestList.length; idx++){
         //console.log(`idx:${idx} / shortestList:${shortestList[idx]}`);
     }
