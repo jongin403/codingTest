@@ -6,10 +6,11 @@
 
 function main(){
     // Input // Output
-    n = 00000000000000000000000000001011; // 3
-    //n = 11111111111111111111111111111101; //31
+    //n = 0b00000000000000000000000000001011; // 3
+    n = 0b11111111111111111111111111111101; //31
 
-    console.log(hammingWeight(n));
+    //console.log(hammingWeight(n));
+    console.log(hammingWeightPractice());    
 }
 
 /**
@@ -27,6 +28,26 @@ var hammingWeight = function(n) {
     }
 
     return result;
+};
+
+var hammingWeightPractice = function() {
+    let result = 0;
+
+    let number = 4294967293;
+    let strNumber = "4294967293";
+    //console.log(number.toString(2)); // 11111111111111111111111111111101
+    //console.log(strNumber.toString(2)); // 4294967293
+
+    let nCopy = number.toString(2);
+
+    console.log(`${nCopy}`);
+    while(0 != nCopy){
+        console.log(`${nCopy}`);
+        if(nCopy & 1) result++;
+        nCopy = nCopy >>> 1;
+    }
+
+    return result; // 0
 };
 
 main();
