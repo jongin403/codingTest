@@ -15,29 +15,23 @@ function main(){
  */
 var lengthOfLIS = function(nums) {
     
-    const memo = [];
+    const tails = new Array(nums.length);
+    let size = 0;
 
-    // dp(idx) = length of the LIS which last index is idx
-    const dp = function(idx){
-
-        if(memo[idx]){
-
-        } else if(idx === 0){
-            memo[idx] = 1;
-        } else {
-            const lessNum = nums.filter((el, index) => el < nums[idx] && index < idx).length;
-            console.log(`lessNum:${lessNum}`);
-            if(dp(idx - 1) <= lessNum){
-                memo[idx] = dp(idx - 1) + 1;
-            } else {
-                memo[idx] = dp(idx - 1);
-            }
+    nums.forEach((item) => {
+        let i = 0, j = size;
+        while (i != j) {
+            let m = (i + j) / 2;
+            if (tails[m] < item)
+                i = m + 1;
+            else
+                j = m;
         }
+        tails[i] = item;
+        if (i === size) ++size;
+    });
 
-        return memo[idx];
-    };
-
-    return dp(nums.length - 1);
+    return size;
 
 };
 
