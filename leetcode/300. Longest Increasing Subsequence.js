@@ -28,7 +28,7 @@ var lengthOfLIS = function(nums) {
                 j = m;
         }
         tails[i] = item;
-        if (i === size) ++size;
+        if (i === size) size++;
     });
 
     return size;
