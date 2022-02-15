@@ -3,10 +3,19 @@
 
 function main(){
     // Input // Output
-    root = [1,null,2,3]; // Output: [1,3,2]
+    var array = [3,9,20,null,null,15,7]; // Output: [1,3,2]
+    // this line creates the tree based on the array
+    
+    const nodes = new Array(array.length);
 
-    var tree = root.reduce((t, v) => t ? insertNode(t, v) : new TreeNode(v), null);
-    console.log(inorderTraversal(tree));
+    for(let i = 0; i < array.length; i++){
+        nodes[i] = array[i]==null ? null : new TreeNode(array[i]);
+        //console.log(nodes[i]);
+    }
+    connectBinaryTree(nodes);
+    const root = nodes[0];
+
+    console.log(inorderTraversal(root));
 }
 
 function TreeNode(val, left, right) {
@@ -15,37 +24,19 @@ function TreeNode(val, left, right) {
     this.right = (right===undefined ? null : right)
 }
 
-function insertNode(tree, data){
-    
-    let node = new TreeNode(data);
-    
-    if(!this.root) {
-        this.root = node;
-        return this;
-    }
-
-    let current = this.root;
-    while (current) {
-        if(data === current.data) {
-            return;
-        }
-    
-        if(data < current.data) {
-            if(!current.left) {
-                current.left = node;
-                break;
-            }
-            current = current.left;
-        }
-
-        if(data > current.data) {
-            if(!current.right) {
-                current.right = node;
-                break;
-            }
-            current = current.right;
+// https://programmerall.com/article/62951124299/
+function connectBinaryTree(nodes){
+    let len = nodes.length;
+    flag = 0;
+    for(let i = 0; 2 * i + 1 < len - 1; i++){
+        if(nodes[i] != null){
+            nodes[i].left = nodes[ 2 * i + 1 - 2 * flag ];
+            nodes[i].right = 2 * i + 2 == len ? null : nodes[ 2 * i + 2 - 2 * flag ];
+        }else{
+            flag++;
         }
     }
+    // print
 }
 
 /**

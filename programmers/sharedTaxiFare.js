@@ -24,14 +24,15 @@ function main(){
 
 function solution(n, s, a, b, fares) {
     var answer = 0;
-
+    const visited = new Array(n + 1).fill(false);
     
+    // 거리값 초기화
     const makeDist = function(n, weights){
         const dist = [];
 
         for(let idx = 1; idx <= n; idx++){
-
             let curRow = [];            
+            
             for(let jdx = 1; jdx <= n; jdx++){
                 let curDist = weights.find(el => el[0] === idx && el[1] === jdx);
                 
@@ -40,35 +41,51 @@ function solution(n, s, a, b, fares) {
 
             }
             dist.push(curRow);
-
         }
         return dist;
     }
+
+    // 가장 가까운 정점 찾기
+    const getClosestV = function(n, curDist){
+        let min = Infinity;
+        let closestV = 1;
+
+        for(let idx = 1; idx <= n; idx++){
+            if(curDist[idx] < min && !visited[idx]){
+                min = curDist[idx];
+                closestV = idx;
+            }
+        }
+        return closestV;
+    }
+
     const dist = makeDist(n, fares);
     console.log(dist);
 
-    const visited = new Array(n + 1).fill(false);
+    const dijkstra = function(startV){
+        visited[startV] = true;
 
-    const getShortest = function(n, s, a, dist){
-        
-        for(let idx = 0; idx < n; idx++){
-            const curNode = dist.slice();
-            visited[idx] = true;
+        for(let idx = 1; idx <= n; idx++){
             
-            for(let jdx = 0; jdx < fares.length; jdx++){
-                if(fares[jdx][0] === s){
-                    dist[fares[jdx][1]] = fares[jdx][2];
-                } else {
-                    dist[fares[jdx][1]] = Infinity;
-                }
+            let closestV = getClosestV(n, dist[startV]);
+            console.log(`dist[startV]:${dist[startV]} / closestV:${closestV}`);
+
+            if(dist[startV][closestV] + dist[closestV][idx] < dist[startV][idx] && !visited[idx]){
+                dist[startV][idx] = dist[startV][closestV] + dist[closestV][idx];
             }
 
+            visited[closestV] = true;
         }
         
         
-
-        return weight;
     }
+
+    dijkstra(s);
+
+    console.log(dist);
+    answer = dist[s][a];
+
+
     return answer;
 }
 
