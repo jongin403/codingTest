@@ -3,6 +3,7 @@
 // 티어 : 실버3
 // 사용 알고리즘 : DP, memoization
 // 시간 복잡도 : O(n)
+// 제출 완료
 
 const fs = require('fs');
 const path = [

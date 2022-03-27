@@ -3,6 +3,7 @@
 // 티어 : 실버4
 // 사용 알고리즘 : 
 // 시간 복잡도 : O(N)
+// 제출 완료
 
 const fs = require('fs');
 const path = [
