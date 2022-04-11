@@ -3,7 +3,7 @@
 // 티어 : 실버3
 // 사용 알고리즘 : 그리디
 // 시간 복잡도 : 
-// 
+// 제출 완료
 
 const fs = require('fs');
 const path = [
@@ -15,7 +15,8 @@ const path = [
 const [n, k, ...arr] = require('fs').readFileSync(path[1])
                               .toString()
                               .trim()
-                              .split(/\s+/);
+                              .split(/\s+/)
+                              .map(v => +v);
 
 solution(n, k, arr);
 
@@ -29,7 +30,7 @@ function solution(n, k, arr) {
     let leftK = k;
 
     for(let idx = arr.length - 1; 0 <= idx; idx--){
-        result += Math.floor(k / arr[idx]);
+        result += Math.floor(leftK / arr[idx]);
         leftK = leftK % arr[idx];
     }
 
